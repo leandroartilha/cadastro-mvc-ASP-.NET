@@ -1,0 +1,56 @@
+﻿@model List<ContatoModel>
+@{
+    ViewData["Title"] = "Listagem de Contato";
+}
+
+<h1>Listagem de Contatos</h1>
+
+<div class="">
+    <a class="btn btn-primary" role="button" asp-controller="Contato" asp-action="Criar">Adicionar Novo Contato</a>
+</div>
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="close">X</button>
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+<div class="alert alert-danger" role="alert">
+    <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="close">X</button>
+    @TempData["MensagemErro"]
+</div>
+}
+
+<table class="table" id="table-contatos">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Opções</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (ContatoModel contato in Model)
+            {
+                <tr>
+                    <th scope="row">@contato.Id</th>
+                    <td>@contato.Nome</td>
+                    <td>@contato.Email</td>
+                    <td>@contato.Celular</td>
+                    <td>
+                        <a class="btn btn-warning" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="Editar">Editar</a>
+                        <a class="btn btn-danger" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="ApagarConfirmacao">Apagar</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
